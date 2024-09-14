@@ -17,5 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/category', [CategoryController::class, 'index']);
-Route::get('/category/{category}/restaurant', [CategoryController::class, 'restaurant']);
-Route::get('/category/{category}/restaurant', [RestaurantController::class, 'index']);
+
+Route::post('/restaurant', [RestaurantController::class, 'index']);
+
+Route::get('/restaurant/{restaurant:slug}', [RestaurantController::class, 'single']);

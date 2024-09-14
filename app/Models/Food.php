@@ -12,4 +12,7 @@ class Food extends BaseModel
     {
         return $this->belongsTo(Restaurant::class);
     }
+    protected $casts = [
+        "extra" => "json"
+    ];
 }

@@ -19,6 +19,7 @@ class RestaurantResrouce extends JsonResource
             "name" => $this->name,
             "openState" => $this->openState,
             "description" => $this->description,
+            "cateogry" => $this->category,
             $this->mergeWhen(isset($this->foods), [
                 "foods" => $this->foods,
             ])

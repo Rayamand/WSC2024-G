@@ -13,12 +13,4 @@ class CategoryController extends Controller
         $categories = Category::all();
         return CategoryResource::collection($categories);
     }
-
-    public function restaurant(Category $category, Request $request) {
-        $query = $category->restaurants();
-        $today = Carbon::now()->dayName;
-        if($request->open) {
-            $query->leftJoin('open_times', $today);
-        }
-    }
 }

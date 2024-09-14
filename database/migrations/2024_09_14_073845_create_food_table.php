@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->foreignId("restaurant_id")->constrained();
-            $table->text('extra');
+            $table->json('extra');
             $table->timestamps();
         });
     }
