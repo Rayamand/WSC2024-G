@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\RestaurantResrouce;
 use App\Models\Restaurant;
+use App\Services\DistanceService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,8 +15,8 @@ class RestaurantController extends Controller
         $data = $request->validate([
             "category" => ['nullable', 'exists:categories,id'],
             "open" => ["nullable", "boolean"],
-            "latitude" => ["nullable"],
-            "longitude" => ["nullable"]
+            "latitude" => ["nullable", "integer"],
+            "longitude" => ["nullable", "integer"]
         ]);
         $now = Carbon::now();
         $today = $now->dayName;
@@ -39,6 +40,12 @@ class RestaurantController extends Controller
             }
             return $restaurant;
         });
+        if(key_exists('latitude', $data) && key_exists('longitude', $data)) {
+            $restaurants = $restaurants->sort(function ($a, $b) {
+                $distance = DistanceService::getDistanceFromLatLonInKm($a['latitude'], $a['longitude'], $b['latitude'], $b['longitude']);
+                return $distance;
+            });
+        }
         return RestaurantResrouce::collection($restaurants);
     }
 
